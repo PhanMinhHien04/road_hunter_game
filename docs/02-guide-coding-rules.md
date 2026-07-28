@@ -244,7 +244,7 @@ sudo apt install clang-format
     <td align="center"><img src="../resources/images/guide/fig1.png" alt="Installing clang-format" width="1050"/></td>
   </tr>
 </table>
-<p align="center"><strong><em>Figure 1:</em></strong> Installing clang-format</p>
+
 
 Verify the install:
 
@@ -263,7 +263,7 @@ Ubuntu clang-format version 21.x.x
     <td align="center"><img src="../resources/images/guide/fig2.png" alt="Checking clang-format version" width="1163"/></td>
   </tr>
 </table>
-<p align="center"><strong><em>Figure 2:</em></strong> Checking the clang-format version</p>
+
 
 ---
 
@@ -300,7 +300,7 @@ find application/sources/app -type f \( -name "*.cpp" -o -name "*.h" \) \
     <td align="center"><img src="../resources/images/guide/fig3.png" alt="Install C/C++ extension" width="1102"/></td>
   </tr>
 </table>
-<p align="center"><strong><em>Figure 4:</em></strong> Installing the C/C++ extension</p>
+
 
 **Step 2.** Open the workspace settings (`.vscode/settings.json`) and add the following config:
 
