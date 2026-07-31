@@ -252,23 +252,21 @@ All sprites below are rendered 1:1 from the game's own drawing code (`bitmap_car
 > **Note:** For a more detailed sequence flow, see [Runtime Signal Processing](docs/04-design-sequence-runtime.md).
 
 ```mermaid
-%%{init: {'theme':'base','themeVariables':{'fontSize':'16px','primaryColor':'#1565c0','primaryTextColor':'#ffffff','primaryBorderColor':'#0d47a1','lineColor':'#90a4ae','signalColor':'#ffc107','signalTextColor':'#ffc107','actorBkg':'#1565c0','actorBorder':'#0d47a1','actorTextColor':'#ffffff','actorLineColor':'#90caf9','noteBkgColor':'#fff59d','noteTextColor':'#000000','noteBorderColor':'#f57f17','activationBkgColor':'#66bb6a','activationBorderColor':'#2e7d32','sequenceNumberColor':'#ffffff','loopTextColor':'#ffc107','labelBoxBkgColor':'#37474f','labelBoxBorderColor':'#90a4ae','labelTextColor':'#ffffff'},'sequence':{'actorMargin':90,'messageFontSize':15,'noteFontSize':14,'actorFontSize':15,'boxMargin':12,'boxTextMargin':6,'noteMargin':10,'useMaxWidth':false}}}%%
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1565c0','primaryTextColor':'#ffffff','primaryBorderColor':'#0d47a1','lineColor':'#90a4ae','signalColor':'#ffc107','signalTextColor':'#ffc107','actorBkg':'#1565c0','actorBorder':'#0d47a1','actorTextColor':'#ffffff','actorLineColor':'#90caf9','noteBkgColor':'#fff59d','noteTextColor':'#000000','noteBorderColor':'#f57f17','activationBkgColor':'#66bb6a','activationBorderColor':'#2e7d32','sequenceNumberColor':'#ffffff'},'sequence':{'actorMargin':70,'messageFontSize':14,'noteFontSize':13,'actorFontSize':14,'boxMargin':10,'useMaxWidth':true}}}%%
 sequenceDiagram
     autonumber
     actor Player as Player
     participant Screen as Screen
     participant Core as Core
     participant PlayerMod as PlayerMod
-    participant Bullet as Bullet[n]
-    participant Enemy as Enemy[n]
-    participant Obstacle as Obstacle[n]
-    participant Chest as Chest[n]
+    participant Enemy as "Enemy[n]"
+    participant Obstacle as "Obstacle[n]"
+    participant Bullet as "Bullet[n]"
+    participant Chest as "Chest[n]"
     participant Boss as Boss
     participant Timer as Timer
-    participant GameOver as GameOver
 
-    rect rgb(30,35,42)
-    Note over Player,GameOver: SCREEN_ENTRY
+    Note over Player,Timer: SCREEN_ENTRY
     Player->>Screen: SCREEN_ENTRY
     activate Screen
     Note over Screen: screen_clear()
@@ -287,10 +285,22 @@ sequenceDiagram
     Screen->>Timer: timer_set(RH_GAME_TICK, 120ms, PERIODIC)
     Note over Screen: STATE PLAYING, Score 0, tick 0, spawn_timer 12
     deactivate Screen
-    end
+```
 
-    rect rgb(30,35,42)
-    Note over Player,GameOver: GAME_PLAY (every 120 ms)
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1565c0','primaryTextColor':'#ffffff','primaryBorderColor':'#0d47a1','lineColor':'#90a4ae','signalColor':'#ffc107','signalTextColor':'#ffc107','actorBkg':'#1565c0','actorBorder':'#0d47a1','actorTextColor':'#ffffff','actorLineColor':'#90caf9','noteBkgColor':'#fff59d','noteTextColor':'#000000','noteBorderColor':'#f57f17','activationBkgColor':'#66bb6a','activationBorderColor':'#2e7d32','sequenceNumberColor':'#ffffff'},'sequence':{'actorMargin':70,'messageFontSize':14,'noteFontSize':13,'actorFontSize':14,'boxMargin':10,'useMaxWidth':true}}}%%
+sequenceDiagram
+    autonumber
+    participant Screen as Screen
+    participant Core as Core
+    participant Enemy as "Enemy[n]"
+    participant Obstacle as "Obstacle[n]"
+    participant Bullet as "Bullet[n]"
+    participant Chest as "Chest[n]"
+    participant Boss as Boss
+    participant Timer as Timer
+
+    Note over Screen,Timer: GAME_PLAY (every 120 ms)
     Timer--)Screen: AC_DISPLAY_RH_GAME_TICK
     activate Screen
     opt State is PLAYING
@@ -318,10 +328,17 @@ sequenceDiagram
         deactivate Core
     end
     deactivate Screen
-    end
+```
 
-    rect rgb(30,35,42)
-    Note over Player,GameOver: ACTION (button input, handled synchronously)
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1565c0','primaryTextColor':'#ffffff','primaryBorderColor':'#0d47a1','lineColor':'#90a4ae','signalColor':'#ffc107','signalTextColor':'#ffc107','actorBkg':'#1565c0','actorBorder':'#0d47a1','actorTextColor':'#ffffff','actorLineColor':'#90caf9','noteBkgColor':'#fff59d','noteTextColor':'#000000','noteBorderColor':'#f57f17','sequenceNumberColor':'#ffffff'},'sequence':{'actorMargin':90,'messageFontSize':14,'noteFontSize':13,'actorFontSize':14,'boxMargin':10,'useMaxWidth':true}}}%%
+sequenceDiagram
+    autonumber
+    actor Player as Player
+    participant Screen as Screen
+    participant PlayerMod as PlayerMod
+
+    Note over Player,PlayerMod: ACTION (button input, handled synchronously)
     Player->>Screen: Button [UP] -> AC_DISPLAY_BUTON_UP_PRESSED
     activate Screen
     opt rh_player_lane is greater than 0
@@ -336,10 +353,20 @@ sequenceDiagram
         Note over Screen: BUZZER_PlaySound(CLICK)
     end
     deactivate Screen
-    end
+```
 
-    rect rgb(30,35,42)
-    Note over Player,GameOver: GAME_OVER and EXIT
+```mermaid
+%%{init: {'theme':'base','themeVariables':{'primaryColor':'#1565c0','primaryTextColor':'#ffffff','primaryBorderColor':'#0d47a1','lineColor':'#90a4ae','signalColor':'#ffc107','signalTextColor':'#ffc107','actorBkg':'#1565c0','actorBorder':'#0d47a1','actorTextColor':'#ffffff','actorLineColor':'#90caf9','noteBkgColor':'#fff59d','noteTextColor':'#000000','noteBorderColor':'#f57f17','sequenceNumberColor':'#ffffff'},'sequence':{'actorMargin':90,'messageFontSize':14,'noteFontSize':13,'actorFontSize':14,'boxMargin':10,'useMaxWidth':true}}}%%
+sequenceDiagram
+    autonumber
+    participant Core as Core
+    participant Enemy as "Enemy[n]"
+    participant Obstacle as "Obstacle[n]"
+    participant Screen as Screen
+    participant Timer as Timer
+    participant GameOver as GameOver
+
+    Note over Core,GameOver: GAME_OVER and EXIT
     Note over Enemy,Obstacle: Collision detected inside enemy_update / obstacle_update
     Core->>Core: rh_game_trigger_over()
     Note over Core: STATE GAME_OVER, rh_state_timer = 24, BUZZER_SOUND_LOWSCORE
@@ -351,7 +378,6 @@ sequenceDiagram
     end
     Screen->>Timer: timer_remove_attr(RH_GAME_TICK)
     Screen->>GameOver: SCREEN_TRAN(scr_rh_game_over_handle)
-    end
 ```
 
 <p align="center"><strong><em>Figure 6:</em></strong> Game sequence logic</p>
