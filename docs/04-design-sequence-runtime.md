@@ -123,7 +123,7 @@ sequenceDiagram
     participant Scr as Screen Handler
     participant Q as AKOS Message Queue
     participant Tmr as Timer Module
-    participant Over as Game Over Screen
+    participant GameOver as Game Over Screen
 
     Note over Core: Collision detected during rh_game_enemy_update()
     Core->>Core: rh_game_trigger_over()
@@ -140,7 +140,7 @@ sequenceDiagram
     Q->>Scr: Dispatch AC_DISPLAY_RH_GAME_TICK
     activate Scr
     Scr->>Tmr: timer_remove_attr(AC_DISPLAY_RH_GAME_TICK)
-    Scr->>Over: SCREEN_TRAN(scr_rh_game_over_handle, &scr_rh_game_over)
+    Scr->>GameOver: SCREEN_TRAN(scr_rh_game_over_handle, &scr_rh_game_over)
     deactivate Scr
 ```
 
